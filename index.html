@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1>Markdown Editor</h1>
+        <span class="word-count" id="word-count">0 words</span>
+      </div>
+      <div class="topbar-right">
+        <button class="tb-btn" onclick="clearEditor()">Clear</button>
+        <button class="tb-btn" onclick="copyMarkdown()">Copy MD</button>
+        <button class="tb-btn" onclick="downloadMarkdown()">Download</button>
+        <button class="ai-btn" onclick="showAIPanel()">AI tools</button>
+      </div>
+    </header>
+
+    <!-- AI tools panel -->
+    <div class="ai-panel" id="ai-panel">
+      <div class="ai-panel-inner">
+        <span class="ai-panel-label">AI actions</span>
+        <button class="ai-action-btn" onclick="aiAction('improve')">Improve writing</button>
+        <button class="ai-action-btn" onclick="aiAction('grammar')">Fix grammar</button>
+        <button class="ai-action-btn" onclick="aiAction('shorten')">Make shorter</button>
+        <button class="ai-action-btn" onclick="aiAction('expand')">Expand ideas</button>
+        <button class="ai-action-btn" onclick="aiAction('headline')">Better headline</button>
+        <button class="ai-action-btn" onclick="aiAction('bullets')">Convert to bullets</button>
+        <button class="close-ai" onclick="hideAIPanel()">✕</button>
+      </div>
+      <div class="ai-status" id="ai-status"></div>
+    </div>
+
+    <!-- Editor area -->
+    <div class="editor-area">
+
+      <!-- Left: write -->
+      <div class="pane write-pane">
+        <div class="pane-header">
+          <span>Write</span>
+          <div class="format-btns">
+            <button onclick="fmt('**','**')" title="Bold"><b>B</b></button>
+            <button onclick="fmt('*','*')"   title="Italic"><i>I</i></button>
+            <button onclick="fmt('`','`')"   title="Code"><code>{ }</code></button>
+            <button onclick="fmtLine('## ')" title="Heading">H</button>
+            <button onclick="fmtLine('- ')"  title="List">—</button>
+            <button onclick="fmtLine('> ')"  title="Quote">❝</button>
+          </div>
+        </div>
+        <textarea
+          id="editor"
+          placeholder="Start writing in Markdown...
+
+# Hello world
+Write your content here. The preview updates live on the right.
+
+## Features
+- Live preview
+- AI writing tools
+- Export to file
+
+> Click **AI tools** above to improve your writing with Claude."
+          oninput="onEdit()"
+          spellcheck="true"
+        ></textarea>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Right: preview -->
+      <div class="pane preview-pane">
+        <div class="pane-header">
+          <span>Preview</span>
+          <span class="pane-hint">Rendered output</span>
+        </div>
+        <div class="preview-content" id="preview"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
